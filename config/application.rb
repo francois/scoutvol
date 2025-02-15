@@ -27,5 +27,28 @@ module Scoutvol
 
     config.active_record.default_timezone = :utc
     config.active_record.time_zone_aware_attributes = true
+
+    config.active_job.queue_adapter = :good_job
+    config.good_job.preserve_job_records = true
+    config.good_job.retry_on_unhandled_error = false
+    config.good_job.on_thread_error = ->(exception) { Rails.error.report(exception) }
+    config.good_job.queues = "*:5"
+    config.good_job.poll_interval = 31 # seconds
+    config.good_job.shutdown_timeout = 25 # seconds
+    config.good_job.enable_cron = true
+    config.good_job.cron_graceful_restart_period = 5.minutes
+    config.good_job.dashboard_default_locale = :en
+    config.good_job.queue_select_limit = 1000
+    config.good_job.execution_mode =
+      case Rails.env
+      when "development"
+        :external
+      when "test"
+        :inline
+      when "production"
+        :external
+      else
+        raise ArgumentError, "Unknown Rails.environment: #{Rails.environment.inspect}"
+      end
   end
 end

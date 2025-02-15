@@ -5,6 +5,7 @@ gem "bootsnap", require: false
 gem "brakeman", require: false, groups: %i[development test]
 gem "capybara", group: :test
 gem "debug", platforms: %i[mri windows], require: "debug/prelude", groups: %i[development test]
+gem "good_job", "~> 4.9"
 gem "importmap-rails"
 gem "jbuilder"
 gem "kamal", require: false
@@ -15,7 +16,6 @@ gem "rails", "~> 8.0.1"
 gem "selenium-webdriver", group: :test
 gem "solid_cable"
 gem "solid_cache"
-gem "solid_queue"
 gem "standard", require: false, groups: %i[development test]
 gem "stimulus-rails"
 gem "thruster", require: false
