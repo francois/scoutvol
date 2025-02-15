@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+require "optparse"
+options = {
+  environment: "development",
+  command: nil
+}
+
+OptionParser.new do |o|
+  o.on("--environment=ENV", "-e", "Select which environment to connect to") do |env|
+    options[:environment] = env
+  end
+
+  o.on("--command=SQL", "-c", "Run this specific SQL query then exit") do |c|
+    options[:command] = c
+  end
+end.parse!
+
+exec({"RAILS_ENV" => options[:environment]}, "bin/rails console")

@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+require "optparse"
+options = {
+  environment: "development",
+  command: nil
+}
+
+OptionParser.new do |o|
+  o.on("--environment=ENV", "-e", "Select which environment to connect to") do |env|
+    options[:environment] = env
+  end
+
+  o.on("--command=SQL", "-c", "Run this specific SQL query then exit") do |c|
+    options[:command] = c
+  end
+end.parse!
+
+url = case options[:environment]
+      when "development", "dev"
+        "postgres://scoutvol@localhost:5432/scoutvol_development"
+      when "test"
+        "postgres://scoutvol@localhost:5432/scoutvol_test"
+      else
+        raise ArgumentError, "Unknown environment: #{options[:environment].inspect}"
+      end
+
+command_line = %W[psql --dbname #{url}]
+command_line << "--command" << options[:command] if options[:command]
+exec(command_line.join(" "))
