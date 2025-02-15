@@ -1,5 +1,6 @@
 source "https://rubygems.org"
 
+gem "avo", "~> 3.17"
 gem "bcrypt", "~> 3.1.7"
 gem "bootsnap", require: false
 gem "brakeman", require: false, groups: %i[development test]

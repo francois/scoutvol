@@ -6,8 +6,6 @@ module Slugify
     validates :slug, presence: true, uniqueness: true, length: {is: 5}
   end
 
-  def to_param = slug
-
   private
 
   def generate_unique_slug
