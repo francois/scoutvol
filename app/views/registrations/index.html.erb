@@ -1,0 +1,18 @@
+<h1>Registrations#index</h1>
+<% @season.events.group_by(&:title).sort_by{ _2.map(&:start_at).min }.each do |title, events| %>
+  <% next if events.all?(&:full?) %>
+  <h2><%= title %></h2>
+  <ul>
+    <% events.sort_by(&:start_at).each do |event| %>
+      <% next if event.full? %>
+      <li>
+        <%= link_to event.start_at.in_time_zone('America/Montreal'), new_registration_path(event_slug: event.slug) %>
+        <% event.registrations.group_by(&:branch).each do |branch, registrations| %>
+          <%= registrations.size %> <%= branch %>
+        <% end %>
+
+        <%= pluralize(event.num_free_registrations, "place") %> libre
+      </li>
+    <% end %>
+  </ul>
+<% end %>

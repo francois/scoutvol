@@ -1,0 +1,41 @@
+<h1><%= @event.title %> <%= @event.start_at.in_time_zone('America/Montreal') %></h1>
+<%= form_with record: @form, scope: :registration, url: create_registration_path(event_slug: @event.slug), method: :post do |form| %>
+  <%= form.fields_for "entry", @entry do |f| %>
+    <div>
+      <%= label_tag "registration[email]", "Adresse courriel" %>
+      <%= text_field_tag "registration[email]", @form.email %>
+    </div>
+  <% end %>
+
+  <% @form.people.each_with_index do |person, index| %>
+    <fieldset>
+      <% if person.errors.any? %>
+        <ul>
+          <% person.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      <% end %>
+
+        <div>
+          <%= label_tag "registration[people][#{index}][name]", "Nom de l'enfant" %>
+          <%= text_field_tag "registration[people][#{index}][name]", person.name %>
+        </div>
+
+        <div>
+          <%= label_tag "registration[people[#{index}][branch]", "Branche de l'enfant" %>
+          <%= select_tag "registration[people][#{index}][branch]",
+                  options_for_select(
+                    ["Castors", "Chouettes", "Aigles", "Éclaireurs", "Pionniers", "Routiers", "Gestion"],
+                    person.branch
+                  ) %>
+        </div>
+    </fieldset>
+  <% end %>
+
+  <div>
+    <%= form.submit "Enregistrer" %>
+    ou
+    <%= link_to "Annuler", registrations_path(season_slug: @event.season.slug) %>
+  </div>
+<% end %>

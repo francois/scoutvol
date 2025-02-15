@@ -14,4 +14,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  get "registrations/:season_slug", to: "registrations#index", as: :registrations
+  get "registrations/:event_slug/new", to: "registrations#new", as: :new_registration
+  post "registrations/:event_slug", to: "registrations#create", as: :create_registration
 end
