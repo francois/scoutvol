@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+system("bundle check || bundle install")
+system("overmind start -f Procfile.dev --can-die release")
