@@ -36,6 +36,7 @@ end
 RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   config.fixture_paths = [Rails.root.join("spec/fixtures")]
+  config.global_fixtures = :all
   config.infer_spec_type_from_file_location!
   config.use_transactional_fixtures = true
 end

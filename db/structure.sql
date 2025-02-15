@@ -27,6 +27,75 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: attendances; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.attendances (
+    id bigint NOT NULL,
+    event_id bigint NOT NULL,
+    slug text NOT NULL,
+    person_name text NOT NULL,
+    branch text NOT NULL,
+    created_at timestamp(6) with time zone NOT NULL,
+    updated_at timestamp(6) with time zone NOT NULL
+);
+
+
+--
+-- Name: attendances_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.attendances_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: attendances_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.attendances_id_seq OWNED BY public.attendances.id;
+
+
+--
+-- Name: events; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.events (
+    id bigint NOT NULL,
+    season_id bigint NOT NULL,
+    title text NOT NULL,
+    slug text NOT NULL,
+    start_at timestamp(6) with time zone NOT NULL,
+    max_registrations integer NOT NULL,
+    created_at timestamp(6) with time zone NOT NULL,
+    updated_at timestamp(6) with time zone NOT NULL
+);
+
+
+--
+-- Name: events_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.events_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: events_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.events_id_seq OWNED BY public.events.id;
+
+
+--
 -- Name: good_job_batches; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -129,6 +198,41 @@ CREATE TABLE public.good_jobs (
 
 
 --
+-- Name: registrations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.registrations (
+    id bigint NOT NULL,
+    event_id bigint NOT NULL,
+    slug text NOT NULL,
+    person_name text NOT NULL,
+    registration_email text NOT NULL,
+    branch text NOT NULL,
+    created_at timestamp(6) with time zone NOT NULL,
+    updated_at timestamp(6) with time zone NOT NULL
+);
+
+
+--
+-- Name: registrations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.registrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: registrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.registrations_id_seq OWNED BY public.registrations.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -145,8 +249,8 @@ CREATE TABLE public.seasons (
     id bigint NOT NULL,
     name text NOT NULL,
     slug text NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    created_at timestamp(6) with time zone NOT NULL,
+    updated_at timestamp(6) with time zone NOT NULL
 );
 
 
@@ -170,6 +274,27 @@ ALTER SEQUENCE public.seasons_id_seq OWNED BY public.seasons.id;
 
 
 --
+-- Name: attendances id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.attendances ALTER COLUMN id SET DEFAULT nextval('public.attendances_id_seq'::regclass);
+
+
+--
+-- Name: events id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.events ALTER COLUMN id SET DEFAULT nextval('public.events_id_seq'::regclass);
+
+
+--
+-- Name: registrations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.registrations ALTER COLUMN id SET DEFAULT nextval('public.registrations_id_seq'::regclass);
+
+
+--
 -- Name: seasons id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -182,6 +307,22 @@ ALTER TABLE ONLY public.seasons ALTER COLUMN id SET DEFAULT nextval('public.seas
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: attendances attendances_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.attendances
+    ADD CONSTRAINT attendances_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: events events_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.events
+    ADD CONSTRAINT events_pkey PRIMARY KEY (id);
 
 
 --
@@ -225,6 +366,14 @@ ALTER TABLE ONLY public.good_jobs
 
 
 --
+-- Name: registrations registrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.registrations
+    ADD CONSTRAINT registrations_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -238,6 +387,34 @@ ALTER TABLE ONLY public.schema_migrations
 
 ALTER TABLE ONLY public.seasons
     ADD CONSTRAINT seasons_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_attendances_on_event_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_attendances_on_event_id ON public.attendances USING btree (event_id);
+
+
+--
+-- Name: index_attendances_on_slug; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_attendances_on_slug ON public.attendances USING btree (slug);
+
+
+--
+-- Name: index_events_on_season_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_events_on_season_id ON public.events USING btree (season_id);
+
+
+--
+-- Name: index_events_on_slug; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_events_on_slug ON public.events USING btree (slug);
 
 
 --
@@ -360,10 +537,48 @@ CREATE INDEX index_good_jobs_on_scheduled_at ON public.good_jobs USING btree (sc
 
 
 --
+-- Name: index_registrations_on_event_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_registrations_on_event_id ON public.registrations USING btree (event_id);
+
+
+--
+-- Name: index_registrations_on_slug; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_registrations_on_slug ON public.registrations USING btree (slug);
+
+
+--
 -- Name: index_seasons_on_slug; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_seasons_on_slug ON public.seasons USING btree (slug);
+
+
+--
+-- Name: registrations fk_rails_05fe64f220; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.registrations
+    ADD CONSTRAINT fk_rails_05fe64f220 FOREIGN KEY (event_id) REFERENCES public.events(id);
+
+
+--
+-- Name: attendances fk_rails_777eb7170a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.attendances
+    ADD CONSTRAINT fk_rails_777eb7170a FOREIGN KEY (event_id) REFERENCES public.events(id);
+
+
+--
+-- Name: events fk_rails_eff9351ccb; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.events
+    ADD CONSTRAINT fk_rails_eff9351ccb FOREIGN KEY (season_id) REFERENCES public.seasons(id);
 
 
 --
@@ -373,5 +588,9 @@ CREATE UNIQUE INDEX index_seasons_on_slug ON public.seasons USING btree (slug);
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250215143207'),
+('20250215143004'),
+('20250215142714'),
+('20250215135823'),
 ('20250215134859');
 

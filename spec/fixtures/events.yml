@@ -1,0 +1,13 @@
+full_event:
+  season: s2024
+  title: "One registration max"
+  slug: u34ms
+  start_at: <%= 15.days.from_now.in_time_zone("America/Montreal").change(hour: 9) %>
+  max_registrations: 1
+
+free_event:
+  season: s2024
+  title: "Two registrations max"
+  slug: a093l
+  start_at: <%= 15.days.from_now.in_time_zone("America/Montreal").change(hour: 11) %>
+  max_registrations: 2

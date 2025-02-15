@@ -1,0 +1,2 @@
+class MaxRegistrationsExceeded < RuntimeError
+end

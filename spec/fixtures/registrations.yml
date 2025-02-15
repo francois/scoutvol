@@ -1,0 +1,13 @@
+bob_on_full_event:
+  event: full_event
+  person_name: "Bob"
+  slug: "mploa"
+  registration_email: "bob@example.com"
+  branch: "foo"
+
+jack_on_free_event:
+  event: free_event
+  person_name: "Jack"
+  slug: "ms09a"
+  registration_email: "jack@example.com"
+  branch: "foo"
