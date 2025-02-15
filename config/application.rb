@@ -24,5 +24,8 @@ module Scoutvol
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     config.active_record.schema_format = :sql
+
+    config.active_record.default_timezone = :utc
+    config.active_record.time_zone_aware_attributes = true
   end
 end
