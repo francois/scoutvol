@@ -1,0 +1,7 @@
+fr-CA:
+  time:
+    formats:
+      day_name: "%A"
+      day_month: "%-d\u00a0%B"
+      day_month_year: "%-d\u00a0%B,\u00a0%Y"
+      hour_minute: "%-Hh%M"

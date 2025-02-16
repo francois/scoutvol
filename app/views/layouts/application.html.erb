@@ -23,19 +23,25 @@
   </head>
 
   <body>
-    <% if flash[:alert].present? %>
-      <div>
-      ALERT: <%= flash[:alert] %>
-      </div>
-    <% end %>
+    <div class="container-md">
+      <div class="row">
+        <div class="col">
+          <% if flash[:alert].present? %>
+            <div class="alert alert-danger" role="alert">
+              <%= flash[:alert] %>
+            </div>
+          <% end %>
 
-    <% if flash[:notice].present? %>
-      <div>
-      NOTICE: <%= flash[:notice] %>
-      </div>
-    <% end %>
+          <% if flash[:notice].present? %>
+            <div class="alert alert-success" role="alert">
+              <%= flash[:notice] %>
+            </div>
+          <% end %>
 
-    <%= yield %>
+          <%= yield %>
+        </div>
+      </div>
+    </div>
 
     <%# Add bottom padding in order to safely activate controls without having iOS bring the Safari navbar in view %>
     <div class="page-footer"></div>

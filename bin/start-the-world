@@ -1,3 +1,4 @@
 #!/usr/bin/env ruby
 system("bundle check || bundle install")
+system("bin/rails assets:clobber")
 system("overmind start -f Procfile.dev --can-die release")

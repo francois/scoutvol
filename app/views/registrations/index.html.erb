@@ -1,18 +1,46 @@
-<h1>Registrations#index</h1>
+<h1>Inscription aux événements de financement <%= @season.name %></h1>
 <% @season.events.group_by(&:title).sort_by{ _2.map(&:start_at).min }.each do |title, events| %>
   <% next if events.all?(&:full?) %>
   <h2><%= title %></h2>
-  <ul>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mb-4">
     <% events.sort_by(&:start_at).each do |event| %>
       <% next if event.full? %>
-      <li>
-        <%= link_to event.start_at.in_time_zone('America/Montreal'), new_registration_path(event_slug: event.slug) %>
-        <% event.registrations.group_by(&:branch).each do |branch, registrations| %>
-          <%= registrations.size %> <%= branch %>
-        <% end %>
 
-        <%= pluralize(event.num_free_registrations, "place") %> libre
-      </li>
+      <div class="col mb-4">
+        <div class="card h-100">
+          <div class="card-header">
+            <%= link_to new_registration_path(event_slug: event.slug) do %>
+              <span class="fw-light fs-6">
+                <%= localize(event.start_at.in_time_zone('America/Montreal'), format: :day_month_year) %>
+              </span>
+              <br>
+              <span class="fw-semibold fs-4">
+                <%= localize(event.start_at.in_time_zone('America/Montreal'), format: :day_name) %>
+                <%= localize(event.start_at.in_time_zone('America/Montreal'), format: :hour_minute) %>
+              </span>
+            <% end %>
+          </div>
+          <div class="card-body <%= "d-flex align-items-center justify-content-center" unless event.registrations.any? %>">
+            <h5 class="mx-3 text-center">
+              <%= pluralize(event.num_free_registrations, "place") %>
+              <%= "libre".pluralize(event.num_free_registrations) %>
+            </h5>
+            <% if event.registrations.any? %>
+              <hr>
+              <div class="row <%= event.registrations.group_by(&:branch).size <= 4 ? "row-cols-2" : "row-cols-2 row-cols-md-3" %>">
+                <% event.registrations.sort_by(&:branch_order).group_by(&:branch_name).each do |branch, registrations| %>
+                  <div class="col">
+                    <span class="badge rounded-pill text-bg-primary">
+                      <%= registrations.size %>
+                    </span>
+                    <%= registrations.first.branch_name %>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
     <% end %>
-  </ul>
+  </div>
 <% end %>

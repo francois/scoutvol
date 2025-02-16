@@ -1,3 +1,4 @@
+css: bin/rails dartsass:watch
 good_job_worker: dockerize --wait tcp://localhost:5432 /usr/bin/env TZ=UTC bundle exec good_job --queues '*:1'
 postgres: docker run --init --tty --env "POSTGRES_HOST_AUTH_METHOD=trust" --env "POSTGRES_USER=scoutvol" --env "POSTGRES_DB=scoutvol_development" --volume scoutvol:/var/lib/postgresql/data --publish 5432:5432 postgres:17.3
 release: dockerize --wait tcp://localhost:5432 dockerize --wait tcp://localhost:5432 /usr/bin/env TZ=UTC bin/rails db:migrate
