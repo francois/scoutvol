@@ -2,7 +2,7 @@
 <html>
   <head>
     <title><%= content_for(:title) || "Scoutvol" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
@@ -36,5 +36,8 @@
     <% end %>
 
     <%= yield %>
+
+    <%# Add bottom padding in order to safely activate controls without having iOS bring the Safari navbar in view %>
+    <div class="page-footer"></div>
   </body>
 </html>
