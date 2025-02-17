@@ -8,7 +8,7 @@ class Avo::Resources::Attendance < Avo::BaseResource
   def fields
     field :id, as: :id
     field :event_id, as: :number
-    field :slug, as: :text
+    field :slug, as: :text, hide_on: :forms
     field :person_name, as: :text
     field :branch, as: :text
     field :event, as: :belongs_to

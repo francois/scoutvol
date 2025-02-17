@@ -9,7 +9,7 @@ class Avo::Resources::Event < Avo::BaseResource
     field :id, as: :id
     field :season_id, as: :number
     field :title, as: :text
-    field :slug, as: :text
+    field :slug, as: :text, hide_on: :forms
     field :start_at, as: :date_time
     field :max_registrations, as: :number
     field :season, as: :belongs_to

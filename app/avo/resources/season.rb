@@ -8,7 +8,7 @@ class Avo::Resources::Season < Avo::BaseResource
   def fields
     field :id, as: :id
     field :name, as: :text
-    field :slug, as: :text
+    field :slug, as: :text, hide_on: :forms
     field :events, as: :has_many
   end
 end
