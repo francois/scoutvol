@@ -1,40 +1,68 @@
-<h1><%= @event.title %> <%= @event.start_at.in_time_zone('America/Montreal') %></h1>
+<h1>
+  <%= localize(@event.start_at.in_time_zone('America/Montreal'), format: :day_name) %>
+  <%= localize(@event.start_at.in_time_zone('America/Montreal'), format: :hour_minute) %>
+  <span class="fw-lighter">
+    <%= localize(@event.start_at.in_time_zone('America/Montreal'), format: :day_month_year) %>
+  </span>
+</h1>
+<h2><%= @event.title %></h2>
 <%= form_with record: @form, scope: :registration, url: create_registration_path(event_slug: @event.slug), method: :post do |form| %>
   <%= form.fields_for "entry", @entry do |f| %>
-    <div>
-      <%= label_tag "registration[email]", "Adresse courriel" %>
-      <%= text_field_tag "registration[email]", @form.email %>
+    <div class="card">
+      <div class="card-body bg-light">
+        <%= label_tag "registration[email]", "Adresse courriel pour le rappel:", class: "form-label" %>
+        <%= email_field_tag "registration[email]", @form.email, class: "form-control", required: true, aria: {describedby: "registration_email_help"} %>
+        <p id="registration_email_help" class="form-text">Vous recevrez un courriel de rappel à cette adresse deux jours avant l'événement</p>
+      </div>
     </div>
   <% end %>
 
-  <% @form.people.each_with_index do |person, index| %>
-    <fieldset>
-      <% if person.errors.any? %>
-        <ul>
-          <% person.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      <% end %>
+  <p>
+  Remplissez une carte par enfant. Les règles de notre Groupe indiquent que chaque enfant inscrit aux Scouts fasse 4h de bénévolat dans son année scoute, à raison de 2x2 heures.
+  </p>
 
-        <div>
-          <%= label_tag "registration[people][#{index}][name]", "Nom de l'enfant" %>
-          <%= text_field_tag "registration[people][#{index}][name]", person.name %>
-        </div>
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+    <% @form.people.each_with_index do |person, index| %>
+      <div class="col">
+        <fieldset class="card bg-light">
+          <div class="card-body">
+            <% if person.errors.any? %>
+              <ul>
+                <% person.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            <% end %>
 
-        <div>
-          <%= label_tag "registration[people[#{index}][branch]", "Branche de l'enfant" %>
-          <%= select_tag "registration[people][#{index}][branch]",
-                  options_for_select(
-                    ["Castors", "Chouettes", "Aigles", "Éclaireurs", "Pionniers", "Routiers", "Gestion"],
-                    person.branch
-                  ) %>
-        </div>
-    </fieldset>
-  <% end %>
+            <div class="mb-2">
+              <%= label_tag "registration[people][#{index}][name]", "Nom de l'enfant:", class: "form-label" %>
+              <%= text_field_tag "registration[people][#{index}][name]", person.name, class: "form-control" %>
+            </div>
 
-  <div>
-    <%= form.submit "Enregistrer" %>
+            <div class="mt-2">
+              <%= label_tag "registration[people[#{index}][branch]", "Unité de l'enfant:", class: "form-label" %>
+              <%= select_tag "registration[people][#{index}][branch]",
+                options_for_select(
+                  {
+                    "Castors" => "castors",
+                    "Chouettes" => "chouettes",
+                    "Aigles" => "aigles",
+                    "Éclaireurs" => "éclaireurs",
+                    "Pionniers" => "pionniers",
+                    "Routiers" => "routiers",
+                    "Gestion" => "gestion"
+                  },
+                  person.branch
+                ), class: "form-select" %>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mt-3">
+    <%= form.submit "Enregistrer", class: "btn btn-primary" %>
     ou
     <%= link_to "Annuler", registrations_path(season_slug: @event.season.slug) %>
   </div>
