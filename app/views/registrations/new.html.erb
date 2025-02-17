@@ -41,19 +41,7 @@
 
             <div class="mt-2">
               <%= label_tag "registration[people[#{index}][branch]", "Unité de l'enfant:", class: "form-label" %>
-              <%= select_tag "registration[people][#{index}][branch]",
-                options_for_select(
-                  {
-                    "Castors" => "castors",
-                    "Chouettes" => "chouettes",
-                    "Aigles" => "aigles",
-                    "Éclaireurs" => "éclaireurs",
-                    "Pionniers" => "pionniers",
-                    "Routiers" => "routiers",
-                    "Gestion" => "gestion"
-                  },
-                  person.branch
-                ), class: "form-select" %>
+              <%= select_tag "registration[people][#{index}][branch]", options_for_select(BRANCH_NAMES, person.branch), class: "form-select" %>
             </div>
           </div>
         </fieldset>

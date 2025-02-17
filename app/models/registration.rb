@@ -5,6 +5,16 @@ class Registration < ApplicationRecord
   validates :person_name, presence: true, length: {in: 1..200}
   validates :registration_email, format: /\A.+@.+[.][a-z]+\z/
 
+  def self.ransackable_attributes(auth_object = nil)
+    %w[person_name registration_email id]
+  end
+
+  def self.ransackable_associations(*)
+    []
+  end
+
+  def branch_name = BRANCH_NAMES.invert.fetch(branch)
+
   def branch_order
     case branch
     when "castors" then 1
@@ -14,20 +24,6 @@ class Registration < ApplicationRecord
     when "pionniers" then 5
     when "routiers" then 6
     when "gestion" then 7
-    else
-      raise ArgumentError, "Unrecognized branch: #{branch.inspect}"
-    end
-  end
-
-  def branch_name
-    case branch
-    when "castors" then "Castors"
-    when "chouettes" then "Chouettes"
-    when "aigles" then "Aigles"
-    when "éclaireurs" then "Éclaireurs"
-    when "pionniers" then "Pionniers"
-    when "routiers" then "Routiers"
-    when "gestion" then "Gestion"
     else
       raise ArgumentError, "Unrecognized branch: #{branch.inspect}"
     end

@@ -29,3 +29,5 @@ gem "thruster", require: false
 gem "turbo-rails"
 gem "tzinfo-data", platforms: %i[windows jruby]
 gem "web-console", group: :development
+
+gem "ransack", "~> 4.3"
