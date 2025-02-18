@@ -1,0 +1,24 @@
+<h1>Métriques <%= @season.name %></h1>
+<div class="card-group">
+
+  <div class="card">
+    <div class="card-header">
+      % enregistrés
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"><%= number_to_percentage 100.0 * @registrations_count.values.sum / @max_registrations, precision: 1 %></h5>
+      <div class="row row-cols-2 row-cols-md-3">
+        <% BRANCH_NAMES.each do |name, branch| %>
+          <% count = @registrations_count.fetch(branch, 0) %>
+          <div class="col">
+            <span class="badge rounded-pill <%= count.zero? ? "text-bg-secondary" : "text-bg-primary" %>">
+              <%= count %>
+            </span>
+            <%= name %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+</div>
