@@ -1,0 +1,5 @@
+Bonjour!
+
+Ce courriel confirme que vous avez inscrit <%= pluralize(@registrations.size, "enfant", plural: "enfants") %> à l'événement "<%= @registrations.first.event.title %>".
+
+<% if @registrations.size == 1 -%>Votre enfant est attendu<% else -%>Vos enfants sont attendus<% end -%> pour <%= localize @registrations.first.event.start_at, format: :hour_minute %>, le <%= localize @registrations.first.event.start_at, format: :day_month_year %>.

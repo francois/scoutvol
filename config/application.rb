@@ -30,7 +30,7 @@ module Scoutvol
 
     config.active_job.queue_adapter = :good_job
     config.good_job.preserve_job_records = true
-    config.good_job.retry_on_unhandled_error = false
+    config.good_job.retry_on_unhandled_error = true
     config.good_job.on_thread_error = ->(exception) { Rails.error.report(exception) }
     config.good_job.queues = "*:5"
     config.good_job.poll_interval = 31 # seconds
@@ -50,5 +50,12 @@ module Scoutvol
       else
         raise ArgumentError, "Unknown Rails.environment: #{Rails.environment.inspect}"
       end
+
+    config.good_job.cron = {
+      send_event_reminder_job: {
+        cron: "17 7 * * * America/Montreal", # daily, at 5:17 am
+        class: "SendEventReminderJob"
+      }
+    }
   end
 end

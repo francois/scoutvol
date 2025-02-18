@@ -22,9 +22,11 @@ class RegistrationsController < ApplicationController
 
     if @form.valid? && @form.people.all?(&:valid?)
       Event.transaction do
-        @form.people.each do |person|
+        registrations = @form.people.map do |person|
           @event.record_registration!(person_name: person.name, registration_email: @form.email, branch: person.branch)
         end
+
+        RegistrationMailer.with(registrations:).registration_confirmation.deliver_later
       end
       redirect_to registrations_path(season_slug: @event.season.slug), notice: "#{@form.people.size} présence(s) enregistrée(s)"
     else

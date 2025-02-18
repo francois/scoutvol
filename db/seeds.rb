@@ -13,11 +13,11 @@ BRANCHES =
     Array.new(3) { "routiers" }
   ].flatten.map(&:freeze).freeze
 
-def seed_registrations(num, event)
+def seed_registrations(num, event, email = nil)
   num.times do
     event.record_registration!(
       person_name: Faker::Name.name,
-      registration_email: Faker::Internet.email,
+      registration_email: email || Faker::Internet.email,
       branch: BRANCHES.sample
     )
   end
@@ -63,11 +63,11 @@ seasons.each do |season|
   season.events.create!(title: "Cannet-🌎-thon de Pâques", start_at: next_saturday_on_or_after(tz.local(season.name.to_i.succ, 5, 1, 9)), slug: SLUGS.shift, max_registrations: 6)
   season.events.create!(title: "Cannet-🌎-thon de Pâques", start_at: next_saturday_on_or_after(tz.local(season.name.to_i.succ, 5, 1, 11)), slug: SLUGS.shift, max_registrations: 6)
   season.events.create!(title: "Cannet-🌎-thon de Pâques", start_at: next_saturday_on_or_after(tz.local(season.name.to_i.succ, 5, 1, 13)), slug: SLUGS.shift, max_registrations: 6)
-  season.events.create!(title: "Cannet-🌎-thon de Pâques", start_at: next_saturday_on_or_after(tz.local(season.name.to_i.succ, 5, 1, 15)), slug: SLUGS.shift, max_registrations: 6)
+  season.events.create!(title: "Cannet-🌎-thon de Pâques", start_at: next_saturday_on_or_after(tz.local(season.name.to_i.succ, 5, 1, 15)), slug: SLUGS.shift, max_registrations: 6).tap { seed_registrations(3, _1, Faker::Internet.email) }
 
   season.events.create!(title: "Cannet-🌎-thon de Pâques", start_at: next_saturday_on_or_after(tz.local(season.name.to_i.succ, 5, 2, 9)), slug: SLUGS.shift, max_registrations: 6)
   season.events.create!(title: "Cannet-🌎-thon de Pâques", start_at: next_saturday_on_or_after(tz.local(season.name.to_i.succ, 5, 2, 11)), slug: SLUGS.shift, max_registrations: 6)
-  season.events.create!(title: "Cannet-🌎-thon de Pâques", start_at: next_saturday_on_or_after(tz.local(season.name.to_i.succ, 5, 2, 13)), slug: SLUGS.shift, max_registrations: 6)
+  season.events.create!(title: "Cannet-🌎-thon de Pâques", start_at: next_saturday_on_or_after(tz.local(season.name.to_i.succ, 5, 2, 13)), slug: SLUGS.shift, max_registrations: 6).tap { seed_registrations(2, _1, Faker::Internet.email) }
   season.events.create!(title: "Cannet-🌎-thon de Pâques", start_at: next_saturday_on_or_after(tz.local(season.name.to_i.succ, 5, 2, 15)), slug: SLUGS.shift, max_registrations: 6)
 
   season.events.create!(title: "Phoenix", start_at: next_sunday_on_or_after(tz.local(season.name.to_i, 11, 17, 18)), slug: SLUGS.shift, max_registrations: 8)

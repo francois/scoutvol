@@ -23,7 +23,9 @@ class Event < ApplicationRecord
   def num_free_registrations = max_registrations - registrations.size
 
   def record_registration!(person_name:, registration_email:, branch:)
-    registrations.create!(person_name:, registration_email:, branch:)
+    result = registrations.create!(person_name:, registration_email:, branch:)
     raise MaxRegistrationsExceeded if registrations.reload.size > max_registrations
+
+    result
   end
 end

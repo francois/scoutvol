@@ -1,0 +1,21 @@
+<p>Bonjour!</p>
+
+<p>
+  <% if @registrations.size == 1 %>
+    Votre enfant est inscrit
+  <% else %>
+    Vos enfants sont inscrits
+  <% end %>
+  au
+  <%= @event.title %>
+  qui se tiendra à
+  <%= localize @event.start_at, format: :hour_minute %>, le <%= localize @event.start_at, format: :day_name %> <%= localize @event.start_at, format: :day_month_year %>
+</p>
+
+<p>
+Merci d'avance de votre implication, et à <%= localize @event.start_at, format: :day_name %>!
+</p>
+
+<p>
+PS: Veuillez répondre à ce courriel si des changements sont survenus, ou si vous avez des questions.
+</p>
