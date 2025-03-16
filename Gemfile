@@ -17,7 +17,7 @@ gem "kamal", require: false
 gem "pg", "~> 1.1"
 gem "propshaft"
 gem "puma", ">= 5.0"
-gem "rails", "~> 8.0.1"
+gem "rails", "~> 8.0.2"
 gem "rails-i18n", "~> 8.0.0"
 gem "rspec-rails", groups: %i[development test], git: "https://github.com/rspec/rspec-rails"
 gem "selenium-webdriver", group: :test
