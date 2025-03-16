@@ -1,24 +1,13 @@
-# README
+# Scoutvol
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Cette application gère les bénévoles (jeunes scouts) qui se présenteront lors des activités Cannet-🌎-thon.
 
-Things you may want to cover:
+## Processus d'inscription
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+1. Un administrateur crée une saison et des événements
+2. L'administrateur diffuse l'URL de la page d'inscription aux parents
+3. Les parents s'inscrivent aux activités offertes
+    1. Le système envoie immédiatement un courriel de confirmation d'inscription
+4. 24h avant l'événement, le système envoie un courriel de rappel, avec des instructions
+5. Lors de l'activité, les administrateurs enregistrent les présences
+6. Après l'événement, les administrateurs regardent les rapports pour savoir qui est venu en surnuméraire, et qui ne s'est pas présenté
