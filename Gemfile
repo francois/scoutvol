@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "avo", "~> 3.17"
+gem "avo", "~> 3.18"
 gem "bcrypt", "~> 3.1.7"
 gem "bootsnap", require: false
 gem "bootstrap", "~> 5.3.3"
