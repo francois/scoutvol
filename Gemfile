@@ -19,15 +19,15 @@ gem "propshaft"
 gem "puma", ">= 5.0"
 gem "rails", "~> 8.0.1"
 gem "rails-i18n", "~> 8.0.0"
+gem "ransack", "~> 4.3"
 gem "rspec-rails", groups: %i[development test], git: "https://github.com/rspec/rspec-rails"
 gem "selenium-webdriver", group: :test
 gem "solid_cable"
 gem "solid_cache"
+gem "sqlite3"
 gem "standard", require: false, groups: %i[development test]
 gem "stimulus-rails"
 gem "thruster", require: false
 gem "turbo-rails"
 gem "tzinfo-data", platforms: %i[windows jruby]
 gem "web-console", group: :development
-
-gem "ransack", "~> 4.3"
