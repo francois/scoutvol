@@ -395,10 +395,6 @@ GEM
       activejob (>= 7.2)
       activerecord (>= 7.2)
       railties (>= 7.2)
-    solid_cache (1.0.7)
-      activejob (>= 7.2)
-      activerecord (>= 7.2)
-      railties (>= 7.2)
     sqlite3 (2.6.0-aarch64-linux-gnu)
     sqlite3 (2.6.0-aarch64-linux-musl)
     sqlite3 (2.6.0-arm-linux-gnu)
@@ -502,7 +498,6 @@ DEPENDENCIES
   rspec-rails!
   selenium-webdriver
   solid_cable
-  solid_cache
   sqlite3
   standard
   stimulus-rails
