@@ -23,8 +23,17 @@ Avo.configure do |config|
 
   ## == Authentication ==
   # config.current_user_method = :current_user
-  # config.authenticate_with do
-  # end
+  config.authenticate_with do
+    if Rails.env.production?
+      if authenticate_with_http_basic { |u, p| u == "admin" && p == ENV["ADMIN_PASSWORD"] }
+        true
+      else
+        request_http_basic_authentication
+      end
+    else
+      true
+    end
+  end
 
   ## == Authorization ==
   # config.is_admin_method = :is_admin
