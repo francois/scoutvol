@@ -390,11 +390,6 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    solid_cable (3.0.7)
-      actioncable (>= 7.2)
-      activejob (>= 7.2)
-      activerecord (>= 7.2)
-      railties (>= 7.2)
     sshkit (1.24.0)
       base64
       logger
@@ -489,7 +484,6 @@ DEPENDENCIES
   ransack (~> 4.3)
   rspec-rails!
   selenium-webdriver
-  solid_cable
   standard
   stimulus-rails
   thruster

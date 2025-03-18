@@ -22,7 +22,6 @@ gem "rails-i18n", "~> 8.0.0"
 gem "ransack", "~> 4.3"
 gem "rspec-rails", groups: %i[development test], git: "https://github.com/rspec/rspec-rails"
 gem "selenium-webdriver", group: :test
-gem "solid_cable"
 gem "standard", require: false, groups: %i[development test]
 gem "stimulus-rails"
 gem "thruster", require: false
