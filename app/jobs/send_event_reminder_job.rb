@@ -1,7 +1,7 @@
 class SendEventReminderJob < ApplicationJob
   def perform
-    cutoff_at = Time.now.in_time_zone("America/Montreal").change(hour: 5)
-    events = Event.includes(:registrations).where(start_at: cutoff_at...1.day.after(cutoff_at)).to_a
+    start_at = 1.day.from_now.change(hour: 5)...2.days.from_now.change(hour: 5)
+    events = Event.includes(:registrations).where(start_at:).to_a
     log_events_to_send_reminders_for(events, cutoff_at)
     events.each do |event|
       registrations_by_email = event.registrations
