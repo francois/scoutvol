@@ -1,4 +1,6 @@
 class SendEventReminderJob < ApplicationJob
+  retry_on StandardError, attempts: 0
+
   def perform
     start_at = 1.day.from_now.change(hour: 5)...2.days.from_now.change(hour: 5)
     events = Event.includes(:registrations).where(start_at:).to_a
