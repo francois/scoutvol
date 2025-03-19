@@ -24,8 +24,14 @@ Avo.configure do |config|
   ## == Authentication ==
   # config.current_user_method = :current_user
   config.authenticate_with do
-    if Rails.env.production?
-      if authenticate_with_http_basic { |u, p| u == "admin" && p == ENV["ADMIN_PASSWORD"] }
+    if ENV["ADMIN_USERNAME"].present?
+      credentials_matched = authenticate_with_http_basic { |username, password|
+        # NOTE: Yes, we use & instead of &&. This is to protect against timing attacks. & needs to evaluate both arguments, while && will may only evaluate one.
+        ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(username), ::Digest::SHA256.hexdigest(ENV.fetch("ADMIN_USERNAME"))) &
+          ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(password), ::Digest::SHA256.hexdigest(ENV.fetch("ADMIN_PASSWORD")))
+      }
+
+      if credentials_matched
         true
       else
         request_http_basic_authentication

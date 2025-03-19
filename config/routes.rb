@@ -1,6 +1,22 @@
 Rails.application.routes.draw do
+  with_dev_auth = lambda do |app|
+    if ENV["ADMIN_USERNAME"].present?
+      Rack::Builder.new do
+        use Rack::Auth::Basic do |username, password|
+          # NOTE: Yes, we use & instead of &&. This is to protect against timing attacks. & needs to evaluate both arguments, while && will may only evaluate one.
+          ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(username), ::Digest::SHA256.hexdigest(ENV.fetch("ADMIN_USERNAME"))) &
+            ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(password), ::Digest::SHA256.hexdigest(ENV.fetch("ADMIN_PASSWORD")))
+        end
+
+        run app
+      end
+    else
+      app
+    end
+  end
+
   mount Avo::Engine, at: Avo.configuration.root_path
-  mount GoodJob::Engine => "good_job"
+  mount with_dev_auth[GoodJob::Engine], at: "/good_job"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
