@@ -1,8 +1,12 @@
 class Registration < ApplicationRecord
   include Slugify
 
+  scope :missing_event_coming_up_notification, -> { where(event_coming_up_notification_sent_at: nil) }
+
   belongs_to :event
+
   before_validation :normalize_registration_email
+
   validates :person_name, presence: true, length: {in: 1..200}
   validates :registration_email, format: /\A.+@.+[.][a-z]+\z/
 
@@ -12,6 +16,20 @@ class Registration < ApplicationRecord
 
   def self.ransackable_associations(*)
     []
+  end
+
+  # @return [Array[Registration]] Registrations for which the notification has not yet been sent
+  def self.flag_all_as_registration_confirmation_notification_sent!(registrations, now: Time.current)
+    where(id: registrations, registration_confirmation_notification_sent_at: nil)
+      .update_all(registration_confirmation_notification_sent_at: now)
+    registrations.select { _1.registration_confirmation_notification_sent_at.nil? }
+  end
+
+  # @return [Array[Registration]] Registrations for which the notification has not yet been sent
+  def self.flag_all_as_event_coming_up_notification_sent!(registrations, now: Time.current)
+    where(id: registrations, event_coming_up_notification_sent_at: nil)
+      .update_all(event_coming_up_notification_sent_at: now)
+    registrations.select { _1.event_coming_up_notification_sent_at.nil? }
   end
 
   def branch_name = BRANCH_NAMES.invert.fetch(branch)

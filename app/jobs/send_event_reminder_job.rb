@@ -4,7 +4,9 @@ class SendEventReminderJob < ApplicationJob
     events = Event.includes(:registrations).where(start_at: cutoff_at...1.day.after(cutoff_at)).to_a
     log_events_to_send_reminders_for(events, cutoff_at)
     events.each do |event|
-      registrations_by_email = event.registrations.group_by(&:registration_email)
+      registrations_by_email = event.registrations
+        .missing_event_coming_up_notification
+        .group_by(&:registration_email)
       log_sending_reminder_emails(event, registrations_by_email)
 
       registrations_by_email.each do |email, registrations|
