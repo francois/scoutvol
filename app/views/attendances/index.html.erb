@@ -1,0 +1,55 @@
+<h1><%= @event.title %></h1>
+
+<table class="table table-hover">
+  <thead>
+  </thead>
+  <tbody>
+    <% @people.sort_by { _1.person_name.downcase }.each do |person| %>
+      <tr>
+        <td><%= person.person_name %></td>
+        <td><%= person.branch_name %></td>
+        <td>
+          <% if !person.attended? %>
+            <%= form_tag create_attendance_path, method: :post do %>
+              <%= hidden_field_tag :event_slug, @event.slug %>
+              <%= hidden_field_tag :registration_slug, person.slug if person.kind_of?(Registration) %>
+              <%= hidden_field_tag :attendance_slug, person.slug if person.kind_of?(Attendance) %>
+              <%= submit_tag "Présent", class: "btn btn-primary w-50" %>
+            <% end %>
+          <% end %>
+
+          <% if person.attended? %>
+            <%= form_tag create_attendance_path, method: :post do %>
+              <%= hidden_field_tag :event_slug, @event.slug %>
+              <%= hidden_field_tag :registration_slug, person.slug if person.kind_of?(Registration) %>
+              <%= hidden_field_tag :attendance_slug, person.slug if person.kind_of?(Attendance) %>
+              <%= submit_tag "Absent", class: "btn btn-warning w-50" %>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="card text-bg-light">
+  <div class="card-body">
+    <h5 class="card-title">Nouvelle inscription</h5>
+
+    <%= form_tag create_attendance_path, method: :post do %>
+      <%= hidden_field_tag :event_slug, @event.slug %>
+
+      <div class="mb-2">
+        <%= label_tag :person_name, "Nom de l'enfant:", class: "form-label" %>
+        <%= text_field_tag :person_name, nil, class: "form-control" %>
+      </div>
+
+      <div class="mt-2">
+        <%= label_tag :branch, "Unité de l'enfant:", class: "form-label" %>
+        <%= select_tag :branch, options_for_select(BRANCH_NAMES), class: "form-select" %>
+      </div>
+
+      <%= submit_tag "Enregistrer" %>
+    <% end %>
+  </div>
+</div>

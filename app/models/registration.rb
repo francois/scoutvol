@@ -4,11 +4,14 @@ class Registration < ApplicationRecord
   scope :missing_event_coming_up_notification, -> { where(event_coming_up_notification_sent_at: nil) }
 
   belongs_to :event
+  has_one :attendance, dependent: :destroy, primary_key: %i[event_id person_name], foreign_key: %i[event_id person_name]
 
   before_validation :normalize_registration_email
 
   validates :person_name, presence: true, length: {in: 1..200}
   validates :registration_email, format: /\A.+@.+[.][a-z]+\z/
+
+  delegate :attended?, to: :attendance, allow_nil: true
 
   def self.ransackable_attributes(auth_object = nil)
     %w[person_name registration_email id]

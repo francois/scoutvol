@@ -28,4 +28,23 @@ class Event < ApplicationRecord
 
     result
   end
+
+  def record_attendance!(registration_slug, now: Time.current)
+    registration = registrations.find_by!(slug: registration_slug)
+    attendances.create!(
+      person_name: registration.person_name,
+      branch: registration.branch,
+      attended_at: now
+    )
+  end
+
+  def flip_attendance!(attendance_slug, now: Time.current)
+    attendance = attendances.find_by!(slug: attendance_slug)
+    attendance.update!(attended_at: attendance.attended? ? nil : now)
+    attendance
+  end
+
+  def record_new_attendance!(person_name:, branch:, now: Time.current)
+    attendances.create!(person_name:, branch:, attended_at: now)
+  end
 end

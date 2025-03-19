@@ -17,6 +17,7 @@ class Avo::Resources::Attendance < Avo::BaseResource
     field :slug, as: :text, hide_on: :forms
     field :person_name, as: :text
     field :branch, as: :text
+    field :attended_at, as: :date_time
     field :event, as: :belongs_to
   end
 end

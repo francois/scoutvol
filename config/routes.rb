@@ -35,4 +35,6 @@ Rails.application.routes.draw do
   get "registrations/:event_slug/new", to: "registrations#new", as: :new_registration
   post "registrations/:event_slug", to: "registrations#create", as: :create_registration
   get "metrics/:season_slug", to: "metrics#show", as: :metrics
+  get "attendances/:event_slug", to: "attendances#index", as: :attendances
+  post "attendances", to: "attendances#create", as: :create_attendance
 end
