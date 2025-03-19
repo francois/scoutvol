@@ -1,0 +1,12 @@
+<h1>Présences <%= @season.name %></h1>
+<ul>
+  <% @events.each do |event| %>
+    <li>
+      <%= link_to attendances_path(event.slug) do %>
+        <%= event.title %> <%= l event.start_at, format: :day_month %> <%= l event.start_at, format: :hour_minute %>
+      <% end %>
+
+      <%= event.attended_count %> / <%= event.registered_count %>
+    </li>
+  <% end %>
+</ul>

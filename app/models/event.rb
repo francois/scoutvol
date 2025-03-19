@@ -47,4 +47,7 @@ class Event < ApplicationRecord
   def record_new_attendance!(person_name:, branch:, now: Time.current)
     attendances.create!(person_name:, branch:, attended_at: now)
   end
+
+  def registered_count = registrations.count
+  def attended_count = attendances.count
 end
