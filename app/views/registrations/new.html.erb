@@ -17,6 +17,15 @@
     </div>
   <% end %>
 
+  <% if @event.registrations.any? %>
+    <div class="row">
+      <div class="col">
+        <h3>Personnes déjà inscrites à cet événement</h3>
+        <p><%= @event.registrations.map(&:person_name).map(&method(:privacy_perserving_name)).sort_by(&:downcase).to_sentence %></p>
+      </div>
+    </div>
+  <% end %>
+
   <p>
   Remplissez une carte par enfant. Les règles de notre Groupe indiquent que chaque enfant inscrit aux Scouts fasse 4h de bénévolat dans son année scoute, à raison de 2x2 heures.
   </p>
