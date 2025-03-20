@@ -211,7 +211,7 @@ CREATE TABLE public.registrations (
     branch text NOT NULL,
     created_at timestamp(6) with time zone NOT NULL,
     updated_at timestamp(6) with time zone NOT NULL,
-    registration_confirmation_sent_at timestamp(6) with time zone,
+    registration_confirmation_notification_sent_at timestamp(6) with time zone,
     event_coming_up_notification_sent_at timestamp(6) with time zone
 );
 
@@ -591,6 +591,7 @@ ALTER TABLE ONLY public.events
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250320131855'),
 ('20250319132540'),
 ('20250319115915'),
 ('20250215143207'),
