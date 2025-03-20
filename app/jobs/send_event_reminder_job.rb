@@ -2,9 +2,10 @@ class SendEventReminderJob < ApplicationJob
   retry_on StandardError, attempts: 0
 
   def perform
-    start_at = 1.day.from_now.change(hour: 5)...2.days.from_now.change(hour: 5)
-    events = Event.includes(:registrations).where(start_at:).to_a
-    log_events_to_send_reminders_for(events, cutoff_at)
+    between = 1.day.from_now.change(hour: 5)...2.days.from_now.change(hour: 5)
+    events = Event.coming_up(between:).to_a
+    log_events_to_send_reminders_for(events, between)
+
     events.each do |event|
       registrations_by_email = event.registrations
         .missing_event_coming_up_notification
@@ -19,13 +20,13 @@ class SendEventReminderJob < ApplicationJob
 
   private
 
-  def log_events_to_send_reminders_for(events, cutoff_at)
+  def log_events_to_send_reminders_for(events, start_at)
     logger.info do
       {
         class: self.class.name,
         message: "Events to send reminders for",
         events_count: events.size,
-        cutoff_at:
+        start_at: [start_at.first.iso8601, start_at.end.iso8601]
       }.to_json
     end
   end

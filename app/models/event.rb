@@ -8,6 +8,8 @@ class Event < ApplicationRecord
   validates :title, presence: true, length: {in: 1..200}
   validates :max_registrations, presence: true, inclusion: {in: 0..200}
 
+  scope :coming_up, ->(between:) { includes(:registrations).where(start_at: between) }
+
   def self.ransackable_attributes(auth_object = nil)
     %w[title slug id]
   end
@@ -23,8 +25,11 @@ class Event < ApplicationRecord
   def num_free_registrations = max_registrations - registrations.size
 
   def record_registration!(person_name:, registration_email:, branch:)
-    result = registrations.create!(person_name:, registration_email:, branch:)
-    raise MaxRegistrationsExceeded if registrations.reload.size > max_registrations
+    result = nil
+    self.class.transaction(requires_new: true) do
+      result = registrations.create!(person_name:, registration_email:, branch:)
+      raise MaxRegistrationsExceeded if registrations.reload.size > max_registrations
+    end
 
     result
   end
@@ -49,5 +54,6 @@ class Event < ApplicationRecord
   end
 
   def registered_count = registrations.count
+
   def attended_count = attendances.count
 end

@@ -11,3 +11,24 @@ jack_on_free_event:
   slug: "ms09a"
   registration_email: "jack@example.com"
   branch: "foo"
+
+john:
+  event: event_9h_from_now
+  person_name: "John"
+  registration_email: "john@example.com"
+  branch: "castors"
+  slug: "23456"
+
+paul:
+  event: event_37h_from_now
+  person_name: "Paul"
+  registration_email: "paul@example.com"
+  branch: "castors"
+  slug: "12345"
+
+ringo:
+  event: event_3d_from_now
+  person_name: "Ringo"
+  registration_email: "ringo@example.com"
+  branch: "castors"
+  slug: "01234"

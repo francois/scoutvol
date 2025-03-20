@@ -11,3 +11,24 @@ free_event:
   slug: a093l
   start_at: <%= 15.days.from_now.in_time_zone("America/Montreal").change(hour: 11) %>
   max_registrations: 2
+
+event_9h_from_now:
+  season: s2024
+  title: "9 hours from now"
+  slug: a094l
+  start_at: <%= 9.hours.from_now.in_time_zone("America/Montreal") %>
+  max_registrations: 2
+
+event_37h_from_now:
+  season: s2024
+  title: "37 hours from now"
+  slug: mo93x
+  start_at: <%= 37.hours.from_now.in_time_zone("America/Montreal") %>
+  max_registrations: 2
+
+event_3d_from_now:
+  season: s2024
+  title: "3 days from now"
+  slug: 3h520
+  start_at: <%= 3.days.from_now.in_time_zone("America/Montreal") %>
+  max_registrations: 2
