@@ -18,7 +18,7 @@ class Event < ApplicationRecord
     []
   end
 
-  def full? = num_free_registrations.zero?
+  def full? = num_free_registrations <= 0
 
   def available? = !full?
 
