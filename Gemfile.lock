@@ -93,7 +93,7 @@ GEM
     ast (2.4.2)
     autoprefixer-rails (10.4.19.0)
       execjs (~> 2)
-    avo (3.18.1)
+    avo (3.18.2)
       actionview (>= 6.1)
       active_link_to
       activerecord (>= 6.1)
@@ -462,7 +462,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
-  avo (~> 3.17)
+  avo (~> 3.18)
   bcrypt (~> 3.1.7)
   bootsnap
   bootstrap (~> 5.3.3)
