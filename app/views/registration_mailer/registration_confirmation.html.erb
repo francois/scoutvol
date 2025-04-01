@@ -7,7 +7,7 @@ Ce courriel confirme que vous avez inscrit <%= pluralize(@registrations.size, "e
   Votre enfant est attendu
 <% else %>
   Vos enfants sont attendus
-<% end %> pour <%= localize @registrations.first.event.start_at, format: :hour_minute %>, le <%= localize @registrations.first.event.start_at, format: :day_month_year %>.
+<% end %> pour <%= localize @registrations.first.event.local_start_at, format: :hour_minute %>, le <%= localize @registrations.first.event.local_start_at, format: :day_month_year %>.
 </p>
 
 <p>

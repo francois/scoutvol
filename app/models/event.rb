@@ -56,4 +56,6 @@ class Event < ApplicationRecord
   def registered_count = registrations.count
 
   def attended_count = attendances.count
+
+  def local_start_at = start_at.in_time_zone('America/Montreal')
 end

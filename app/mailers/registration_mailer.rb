@@ -19,6 +19,6 @@ class RegistrationMailer < ApplicationMailer
     return if @registrations.empty?
 
     mail to: @registrations.first.registration_email,
-      subject: "Rappel: #{@event.title} ce #{localize(@event.start_at, format: :day_name)} à #{localize(@event.start_at, format: :hour_minute)}"
+      subject: "Rappel: #{@event.title} ce #{localize(@event.local_start_at, format: :day_name)} à #{localize(@event.local_start_at, format: :hour_minute)}"
   end
 end
