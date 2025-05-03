@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
 system("bundle check || bundle install")
 system("bin/rails assets:clobber")
+system("docker pull $( awk '/docker run/ { print $NF }' Procfile.dev )")
 system("overmind start -f Procfile.dev --can-die release")
