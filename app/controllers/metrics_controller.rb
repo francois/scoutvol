@@ -6,7 +6,7 @@ class MetricsController < ApplicationController
   end
 
   def registrations
-    start_on = params[:start_on].to_date || Time.zone.today
+    start_on = (params[:start_on] || Time.zone.today).to_date
     bounds = 2.days.before(start_on)...5.days.after(start_on)
 
     @season = Season.includes(events: :registrations).find_by!(slug: params[:season_slug])
