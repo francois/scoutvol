@@ -1,0 +1,30 @@
+<h1>
+  <%= @events.map(&:title).first %>
+  <%= @season.name %>
+</h1>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Nom</th>
+      <th>Branche</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @events.sort_by(&:start_at).each do |event| %>
+      <tr>
+        <th scope="" colspan="3" class="py-3">
+          <%= event.start_at.in_time_zone("America/Montreal").strftime("%Y-%m-%d %H:%M") %>
+        </th>
+      </tr>
+      <% event.registrations.sort_by { [it.branch_order, it.person_name.downcase] }.each do |registration| %>
+        <tr>
+          <td></td>
+          <td><%= registration.person_name %></td>
+          <td><%= registration.branch_name %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
