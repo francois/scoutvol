@@ -3,7 +3,7 @@ source "https://rubygems.org"
 gem "avo", "~> 3.18"
 gem "bcrypt", "~> 3.1.7"
 gem "bootsnap", require: false
-gem "bootstrap", "~> 5.3.3"
+gem "bootstrap", "~> 5.3.5"
 gem "brakeman", require: false, groups: %i[development test]
 gem "byebug"
 gem "capybara", group: :test
