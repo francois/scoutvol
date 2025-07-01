@@ -10,7 +10,7 @@ gem "capybara", group: :test
 gem "dartsass-rails", "~> 0.5.1"
 gem "debug", platforms: %i[mri windows], require: "debug/prelude", groups: %i[development test]
 gem "faker", "~> 3.5", groups: %i[development test]
-gem "good_job", "~> 4.9"
+gem "good_job", "~> 4.11"
 gem "importmap-rails"
 gem "jbuilder"
 gem "kamal", require: false
